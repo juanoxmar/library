@@ -1,0 +1,69 @@
+html {
+    font-size: 10px;
+}
+
+body {
+    color: white;
+    background: rgb(35, 35, 35);
+}
+
+header {
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.bookForm {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+}
+
+@media (max-width: 800px) {
+    .bookForm {
+        flex-direction: column;
+    }
+}
+
+.books {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.aBook {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    width: 200px;
+}
+
+.readButton {
+}
+
+.formButton {
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.form {
+    width: auto;
+}
+
+div {
+    border: 2px solid rgb(100, 100, 100);
+    margin: 5px;
+    padding: 5px;
+}
+
+ul {
+    list-style-type: none;
+}
