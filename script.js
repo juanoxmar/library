@@ -1,5 +1,4 @@
 let myLibrary = [];
-let i = 0;
 
 //new book constructor
 function book(title, author, pages, read) {
@@ -15,6 +14,8 @@ book.prototype.addBookToLibrary = function() {
 };
 
 book.prototype.render = function() {
+    let i = myLibrary.length-1;
+
     const bookLib = document.getElementById('books');
     const div = document.createElement('div');
     const ulist = document.createElement('ul');
@@ -40,7 +41,6 @@ book.prototype.render = function() {
     readButton.classList.add('readButton');
     readButton.setAttribute('id', i); 
     document.getElementById(this.title).appendChild(readButton);
-    i++;
 }
 
 //toggles read/unread with button
@@ -60,11 +60,65 @@ function read(){
     });
 };
 
+document.getElementById('formButton').addEventListener('click', e => document.getElementById('submitBookForm') == null ? forms(): null);
 
-const HarryPotter = new book('Harry Potter', 'J.K. Rowling', '400', 'not read');
-HarryPotter.addBookToLibrary();
-HarryPotter.render();
+function forms(){
+    const getForm = document.getElementById('form');
+    const form = document.createElement('form');
+    const label = document.createElement('label');
+    const input = document.createElement('input');
+    const select = document.createElement('select');
+    const option = document.createElement('option');
+    const submitBook = document.createElement('button');
 
-//const theHobbit = new book('The Hobbit', 'J.R.R. Tolkien', '295', 'read');
-//theHobbit.addBookToLibrary();
-//theHobbit.render()
+    form.setAttribute('id', 'submitBookForm')
+    getForm.appendChild(form);
+
+    label.innerHTML = 'Title: ';
+    label.setAttribute('for', 'title');
+    form.appendChild(label.cloneNode(true));
+    input.setAttribute('id', 'title');
+    form.appendChild(input.cloneNode(true));
+
+    label.innerHTML = 'Author: ';
+    label.setAttribute('for', 'author');
+    form.appendChild(label.cloneNode(true));
+    input.setAttribute('id', 'author');
+    form.appendChild(input.cloneNode(true));
+
+    label.innerHTML = 'Pages: ';
+    label.setAttribute('for', 'pages');
+    form.appendChild(label.cloneNode(true));
+    input.setAttribute('id', 'pages');
+    form.appendChild(input.cloneNode(true));
+
+    label.innerHTML = 'Read?: ';
+    label.setAttribute('for', 'read');
+    form.appendChild(label.cloneNode(true));
+    option.innerHTML = 'Yes';
+    option.setAttribute('value', 'read');
+    select.appendChild(option.cloneNode(true));
+    option.innerHTML = 'No';
+    option.setAttribute('value', 'not read');
+    select.appendChild(option.cloneNode(true));
+    select.setAttribute('id', 'haveRead');
+    form.appendChild(select.cloneNode(true));
+    submitBook.innerHTML = 'Submit';
+    submitBook.setAttribute('id', 'submitBook');
+    submitBook.setAttribute('type', 'button');
+    submitBook.setAttribute('value', 'submit');
+    form.appendChild(submitBook.cloneNode(true));
+    
+    document.getElementById('submitBook').addEventListener('click', function(e) {
+        const bookTitle = document.getElementById('title').value;
+        const bookAuthor = document.getElementById('author').value;
+        const bookPages = document.getElementById('pages').value;
+        const bookRead = document.getElementById('haveRead').value;
+
+        const newBook = new book(bookTitle, bookAuthor, bookPages, bookRead);
+        newBook.addBookToLibrary();
+        newBook.render();
+        read();
+        getForm.removeChild(form);
+    });
+};
