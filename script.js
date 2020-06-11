@@ -12,57 +12,59 @@ function book(title, author, pages, read) {
 //adds new book to myLibrary
 book.prototype.addBookToLibrary = function() {
     myLibrary.push(this);
-}
+};
 
-//renders array of myLibrary
-function render(bk) {
+book.prototype.render = function() {
     const bookLib = document.getElementById('books');
     const div = document.createElement('div');
     const ulist = document.createElement('ul');
     const list = document.createElement('li');
     const readButton = document.createElement('button');
     
-    div.setAttribute('id', bk.title);
+    div.setAttribute('id', this.title);
     div.classList.add('aBook');
     bookLib.appendChild(div.cloneNode(true));
 
-    list.innerHTML = bk.title;
+    list.innerHTML = this.title;
     ulist.appendChild(list.cloneNode(true));
-    list.innerHTML = bk.author;
+    list.innerHTML = this.author;
     ulist.appendChild(list.cloneNode(true));
-    list.innerHTML = bk.pages;
+    list.innerHTML = this.pages;
     ulist.appendChild(list.cloneNode(true));
-    list.innerHTML = bk.read;
+    list.innerHTML = this.read;
     list.setAttribute('id', 'read' + i ); 
     ulist.appendChild(list.cloneNode(true));
-    document.getElementById(bk.title).appendChild(ulist.cloneNode(true));
+    document.getElementById(this.title).appendChild(ulist.cloneNode(true));
 
     readButton.innerHTML = 'Read?';
     readButton.classList.add('readButton');
     readButton.setAttribute('id', i); 
-    document.getElementById(bk.title).appendChild(readButton);
+    document.getElementById(this.title).appendChild(readButton);
     i++;
-};
-
-function read(){
-    
 }
 
+//toggles read/unread with button
+function read(){
+    let j = myLibrary.length-1;
+
+    const buttonClass = Array.from(document.getElementsByClassName('readButton'));
+
+    buttonClass[j].addEventListener('click', function(e){
+        const readText = document.getElementById('read' + j);
+
+        if(myLibrary[j].read == 'read')
+            myLibrary[j].read = 'not read';
+        else
+            myLibrary[j].read = 'read';
+        readText.innerHTML = myLibrary[j].read;
+    });
+};
+
+
 const HarryPotter = new book('Harry Potter', 'J.K. Rowling', '400', 'not read');
-const theHobbit = new book('The Hobbit', 'J.R.R. Tolkien', '295', 'read');
-theHobbit.addBookToLibrary();
 HarryPotter.addBookToLibrary();
-render(myLibrary[0]);
-render(myLibrary[1]);
+HarryPotter.render();
 
-const buttonClass = Array.from(document.getElementsByClassName('readButton'));
-const buttonEvent = buttonClass.map(x => x.addEventListener('click', function(e){
-    let j = +x.id;
-    const readText = document.getElementById('read'+j);
-
-    if(myLibrary[j].read == 'read')
-        myLibrary[j].read = 'not read';
-    else
-        myLibrary[j].read = 'read';
-    readText.innerHTML = myLibrary[j].read;
-}));
+//const theHobbit = new book('The Hobbit', 'J.R.R. Tolkien', '295', 'read');
+//theHobbit.addBookToLibrary();
+//theHobbit.render()
