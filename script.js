@@ -28,9 +28,9 @@ book.prototype.render = function() {
 
     list.innerHTML = this.title;
     ulist.appendChild(list.cloneNode(true));
-    list.innerHTML = this.author;
+    list.innerHTML = 'Author: ' + this.author;
     ulist.appendChild(list.cloneNode(true));
-    list.innerHTML = this.pages;
+    list.innerHTML = 'Pages: ' + this.pages;
     ulist.appendChild(list.cloneNode(true));
     list.innerHTML = this.read;
     list.setAttribute('id', 'read' + i ); 
@@ -52,10 +52,10 @@ function read(){
     buttonClass[j].addEventListener('click', function(e){
         const readText = document.getElementById('read' + j);
 
-        if(myLibrary[j].read == 'read')
-            myLibrary[j].read = 'not read';
+        if(myLibrary[j].read == 'Read')
+            myLibrary[j].read = 'Not Read';
         else
-            myLibrary[j].read = 'read';
+            myLibrary[j].read = 'Read';
         readText.innerHTML = myLibrary[j].read;
     });
 };
@@ -64,6 +64,7 @@ document.getElementById('formButton').addEventListener('click', e => document.ge
 
 function forms(){
     const getForm = document.getElementById('form');
+    const div = document.createElement('div');
     const form = document.createElement('form');
     const label = document.createElement('label');
     const input = document.createElement('input');
@@ -76,38 +77,50 @@ function forms(){
 
     label.innerHTML = 'Title: ';
     label.setAttribute('for', 'title');
-    form.appendChild(label.cloneNode(true));
+    div.classList.add('formInputs');
+    div.appendChild(label);
     input.setAttribute('id', 'title');
-    form.appendChild(input.cloneNode(true));
+    div.appendChild(input);
+    form.appendChild(div.cloneNode(true));
 
     label.innerHTML = 'Author: ';
     label.setAttribute('for', 'author');
-    form.appendChild(label.cloneNode(true));
+    div.appendChild(label);
     input.setAttribute('id', 'author');
-    form.appendChild(input.cloneNode(true));
+    div.appendChild(input);
+    form.appendChild(div.cloneNode(true));
 
     label.innerHTML = 'Pages: ';
     label.setAttribute('for', 'pages');
-    form.appendChild(label.cloneNode(true));
+    div.appendChild(label);
     input.setAttribute('id', 'pages');
-    form.appendChild(input.cloneNode(true));
+    div.appendChild(input);
+    form.appendChild(div.cloneNode(true));
+
+    div.removeChild(input);
 
     label.innerHTML = 'Read?: ';
     label.setAttribute('for', 'read');
-    form.appendChild(label.cloneNode(true));
+    div.appendChild(label);
     option.innerHTML = 'Yes';
-    option.setAttribute('value', 'read');
+    option.setAttribute('value', 'Read');
     select.appendChild(option.cloneNode(true));
     option.innerHTML = 'No';
-    option.setAttribute('value', 'not read');
+    option.setAttribute('value', 'Not Read');
     select.appendChild(option.cloneNode(true));
     select.setAttribute('id', 'haveRead');
-    form.appendChild(select.cloneNode(true));
+    div.appendChild(select);
+    form.appendChild(div.cloneNode(true));
+
+    div.removeChild(select);
+    div.removeChild(label);
+    
     submitBook.innerHTML = 'Submit';
     submitBook.setAttribute('id', 'submitBook');
     submitBook.setAttribute('type', 'button');
     submitBook.setAttribute('value', 'submit');
-    form.appendChild(submitBook.cloneNode(true));
+    div.appendChild(submitBook);
+    form.appendChild(div.cloneNode(true));
     
     document.getElementById('submitBook').addEventListener('click', function(e) {
         const bookTitle = document.getElementById('title').value;
@@ -122,3 +135,13 @@ function forms(){
         getForm.removeChild(form);
     });
 };
+
+const theHobbit = new book('The Hobbit', 'J.R.R. Tolkien', '287', 'Read');
+theHobbit.addBookToLibrary();
+theHobbit.render();
+read();
+
+const harryPotter = new book('Harry Potter & The Sorcerer\'s Stone', 'J.K. Rowling', '309', 'Read');
+harryPotter.addBookToLibrary();
+harryPotter.render();
+read();
