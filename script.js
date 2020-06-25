@@ -1,47 +1,50 @@
 let myLibrary = [];
 
-//new book constructor
-function book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-};
+//class
 
-//adds new book to myLibrary
-book.prototype.addBookToLibrary = function() {
-    myLibrary.push(this);
-};
-
-book.prototype.render = function() {
-    let i = myLibrary.length-1;
-
-    const bookLib = document.getElementById('books');
-    const div = document.createElement('div');
-    const ulist = document.createElement('ul');
-    const list = document.createElement('li');
-    const readButton = document.createElement('button');
+class book {
+    constructor(title, author, pages, read){
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    }
     
-    div.setAttribute('id', this.title);
-    div.classList.add('aBook');
-    bookLib.appendChild(div.cloneNode(true));
+    addBookToLibrary() {
+        myLibrary.push(this);
+    }
 
-    list.innerHTML = this.title;
-    ulist.appendChild(list.cloneNode(true));
-    list.innerHTML = 'Author: ' + this.author;
-    ulist.appendChild(list.cloneNode(true));
-    list.innerHTML = 'Pages: ' + this.pages;
-    ulist.appendChild(list.cloneNode(true));
-    list.innerHTML = this.read;
-    list.setAttribute('id', 'read' + i ); 
-    ulist.appendChild(list.cloneNode(true));
-    document.getElementById(this.title).appendChild(ulist.cloneNode(true));
+    render() {
+        let i = myLibrary.length-1;
 
-    readButton.innerHTML = 'Read?';
-    readButton.classList.add('readButton');
-    readButton.setAttribute('id', i); 
-    document.getElementById(this.title).appendChild(readButton);
-}
+        const bookLib = document.getElementById('books');
+        const div = document.createElement('div');
+        const ulist = document.createElement('ul');
+        const list = document.createElement('li');
+        const readButton = document.createElement('button');
+        
+        div.setAttribute('id', this.title);
+        div.classList.add('aBook');
+        bookLib.appendChild(div.cloneNode(true));
+
+        list.innerHTML = this.title;
+        ulist.appendChild(list.cloneNode(true));
+        list.innerHTML = 'Author: ' + this.author;
+        ulist.appendChild(list.cloneNode(true));
+        list.innerHTML = 'Pages: ' + this.pages;
+        ulist.appendChild(list.cloneNode(true));
+        list.innerHTML = this.read;
+        list.setAttribute('id', 'read' + i ); 
+        ulist.appendChild(list.cloneNode(true));
+        document.getElementById(this.title).appendChild(ulist.cloneNode(true));
+
+        readButton.innerHTML = 'Read?';
+        readButton.classList.add('readButton');
+        readButton.setAttribute('id', i); 
+        document.getElementById(this.title).appendChild(readButton);
+    }
+};
+
 
 //toggles read/unread with button
 function read(){
